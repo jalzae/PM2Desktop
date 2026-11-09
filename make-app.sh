@@ -43,5 +43,17 @@ EOF
 
 codesign --force -s - "$APP"
 
+# Assemble .dmg installer (drag PM2 Desktop onto Applications)
+STAGING="build/dmg-staging"
+DMG="build/PM2Desktop.dmg"
+rm -rf "$STAGING" "$DMG"
+mkdir -p "$STAGING"
+cp -R "$APP" "$STAGING/"
+ln -s /Applications "$STAGING/Applications"
+
+hdiutil create -volname "PM2 Desktop" -srcfolder "$STAGING" -ov -format UDZO "$DMG" >/dev/null
+rm -rf "$STAGING"
+
 echo "Built $APP"
-echo "Run with: open $APP"
+echo "Built $DMG"
+echo "Install: open $DMG → drag PM2 Desktop into Applications"

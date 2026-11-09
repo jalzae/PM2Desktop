@@ -19,8 +19,8 @@ Native macOS app (SwiftUI) to control [PM2](https://pm2.keymetrics.io/) process 
 
 ```bash
 swift run            # development build
-./make-app.sh        # release .app bundle at build/PM2Desktop.app
-open build/PM2Desktop.app
+./make-app.sh        # release .app + .dmg installer in build/
+open build/PM2Desktop.dmg   # drag PM2 Desktop into Applications
 ```
 
 ## Notes
