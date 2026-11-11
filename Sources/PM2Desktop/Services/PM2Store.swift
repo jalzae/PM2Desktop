@@ -318,6 +318,24 @@ final class PM2Store: ObservableObject {
         statusText = nil
     }
 
+    /// Restores the previously saved process list (`pm2 resurrect`),
+    /// e.g. after a daemon restart or a reboot.
+    func resurrect() async {
+        guard !isBusy else { return }
+        isBusy = true
+        defer { isBusy = false }
+        errorText = nil
+
+        statusText = "Restoring saved processes…"
+        do {
+            try await ShellRunner.shared.runChecked("pm2 resurrect", timeout: 120)
+            await refresh()
+        } catch {
+            errorText = error.localizedDescription
+        }
+        statusText = nil
+    }
+
     // MARK: - Create
 
     func addProcess(_ config: NewProcessConfig) async throws {

@@ -75,6 +75,14 @@ struct ProcessListView: View {
             .help("Add a new process")
             .disabled(store.isBusy)
 
+            Button {
+                Task { await store.resurrect() }
+            } label: {
+                Image(systemName: "arrow.down.doc")
+            }
+            .help("Resurrect — restore the saved process list (after daemon restart or reboot)")
+            .disabled(store.isBusy)
+
             Divider()
 
             Button {
